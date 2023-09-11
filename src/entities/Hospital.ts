@@ -14,6 +14,7 @@ export class Hospital extends Model {
     validate: {
       notNull: { msg: 'Email is required' }, // add a validation message
     },
+    unique: true,
   })
   name: string;
 

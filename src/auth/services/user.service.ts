@@ -62,16 +62,17 @@ export class Userservice {
       return await this.operator.findOne({
         where: {
           email: userdetail.email,
-          password: userdetail.password,
+          // password: userdetail.password,
         },
       });
     }
 
     if (identity === 'doctor') {
+      console.log('hfh');
       return await this.doctor.findOne({
         where: {
           email: userdetail.email,
-          password: userdetail.password,
+          // password: userdetail.password,
         },
       });
     }
