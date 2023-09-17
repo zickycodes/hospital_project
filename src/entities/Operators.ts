@@ -14,7 +14,7 @@ export class Operator extends Model {
       notNull: { msg: 'Email is required' }, // add a validation message
     },
   })
-  name: string;
+  first_name: string;
 
   @Column({
     allowNull: false, // set the allowNull option to false to enforce not null constraint
@@ -22,10 +22,11 @@ export class Operator extends Model {
       notNull: { msg: 'Password is required' }, // add a validation message
     },
   })
-  address: string;
+  last_name: string;
 
   @Column({
     allowNull: false, // set the allowNull option to false to enforce not null constraint
+    unique: true,
     validate: {
       notNull: { msg: 'Password is required' }, // add a validation message
     },

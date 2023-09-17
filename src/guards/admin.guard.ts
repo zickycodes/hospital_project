@@ -10,7 +10,7 @@ import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
@@ -26,6 +26,10 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.get('JWT_Secret'),
       });
+      //   console.log('PAYLOAD', payload);
+      if (payload.role !== 'admin') {
+        throw new UnauthorizedException('You are not an admin user');
+      }
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers
       request['user'] = payload;

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { SuperAdmin } from 'src/entities/SuperAdmin';
 import { Doctor } from 'src/entities/Doctors';
 import { InjectModel } from '@nestjs/sequelize';
@@ -39,59 +39,84 @@ export class Userservice {
     //     type: QueryTypes.SELECT,
     //   },
     // );
-    if (identity === 'admin') {
-      console.log('ksh');
-      return await this.superAdminModel.findOne({
-        where: {
-          email: userdetail.email,
-          // password: userdetail.password,
-        },
-      });
-    }
+    try {
+      if (identity === 'admin') {
+        // console.log('ksh');
+        const user = await this.superAdminModel.findOne({
+          where: {
+            email: userdetail.email,
+            // password: userdetail.password,
+          },
+        });
+        return {
+          role: 'admin',
+          user,
+        };
+      }
 
-    if (identity === 'hospitaladmin') {
-      return await this.hospitaladmin.findOne({
-        where: {
-          email: userdetail.email,
-          password: userdetail.password,
-        },
-      });
-    }
+      if (identity === 'hospitaladmin') {
+        const user = await this.hospitaladmin.findOne({
+          where: {
+            email: userdetail.email,
+            // password: userdetail.password,
+          },
+        });
+        return {
+          role: 'hospitaladmin',
+          user,
+        };
+      }
 
-    if (identity === 'operator') {
-      return await this.operator.findOne({
-        where: {
-          email: userdetail.email,
-          // password: userdetail.password,
-        },
-      });
-    }
+      if (identity === 'operator') {
+        const user = await this.operator.findOne({
+          where: {
+            email: userdetail.email,
+            // password: userdetail.password,
+          },
+        });
+        return {
+          role: 'operator',
+          user,
+        };
+      }
 
-    if (identity === 'doctor') {
-      console.log('hfh');
-      return await this.doctor.findOne({
-        where: {
-          email: userdetail.email,
-          // password: userdetail.password,
-        },
-      });
+      if (identity === 'doctor') {
+        // console.log('hfh');
+        const user = await this.doctor.findOne({
+          where: {
+            email: userdetail.email,
+            // password: userdetail.password,
+          },
+        });
+        return {
+          role: 'doctor',
+          user,
+        };
+      }
+    } catch (e) {
+      throw new BadRequestException(e.message);
     }
   }
 
   async createUser(userDetails: SignUpDto, identity: string) {
-    const password = userDetails.password;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    try {
+      const password = userDetails.password;
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    if (identity === 'admin') {
-      console.log('ksh');
+      if (identity === 'admin') {
+        console.log('ksh');
 
-      const res = await this.superAdminModel.create({
-        ...userDetails,
-        password: hashedPassword,
-      });
-      return res;
+        const res = await this.superAdminModel.create({
+          ...userDetails,
+          password: hashedPassword,
+        });
+        return res;
+      }
+    } catch (e) {
+      throw new BadRequestException(e.message);
     }
   }
+
   // async findOneAndUpdate(
   //   useridentifier: number | string,
   //   userdetails: any,

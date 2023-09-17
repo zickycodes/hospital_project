@@ -27,6 +27,7 @@ export class Doctor extends Model {
 
   @Column({
     allowNull: false, // set the allowNull option to false to enforce not null constraint
+    unique: true,
     validate: {
       notNull: { msg: 'Password is required' }, // add a validation message
     },

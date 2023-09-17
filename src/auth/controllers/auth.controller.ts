@@ -15,7 +15,8 @@ import {
 import { SignUpDto } from '../dto/signupdto';
 import { LoginDto } from '../dto/logindto';
 import { AuthService } from '../services/auth.service';
-import { AuthGuard } from '../services/auth.guard';
+import { AdminGuard } from 'src/guards/admin.guard';
+// import { AuthGuard } from '../services/auth.guard';
 
 @Controller('/auth')
 export class AuthController {
@@ -34,10 +35,10 @@ export class AuthController {
     return this.authService.signup(dto, params.identity);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   @Get('profile')
   getProfile(@Request() req) {
-    console.log(req.user);
+    // console.log(req.user);
     return 'hfyue';
   }
 }
