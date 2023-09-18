@@ -11,11 +11,11 @@ async function bootstrap() {
     await sequelize.authenticate();
     console.log('Connected to the database');
     await app.listen(process.env.PORT || 3000);
-
     app.enableCors({
       origin: '*',
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      preflightContinue: false,
+      preflightContinue: true,
+      allowedHeaders: ['content-type'],
       optionsSuccessStatus: 204,
     });
     // app.enableCors({

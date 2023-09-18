@@ -75,6 +75,31 @@ export class HospitalAdminService {
   }
 
   // Patients Logic
+
+  async showPatients() {
+    try {
+      const patient = await this.patient.findAll();
+      const patientData = patient.map((patient) => ({
+        id: patient.id,
+        first_name: patient.first_name,
+        email: patient.email,
+      }));
+      return patientData;
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+  async showPatient(id: string) {
+    try {
+      return await this.patient.findOne({
+        where: {
+          id,
+        },
+      });
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
   async addPatients(patient: PatientDto) {
     try {
       // const password = operator.password;

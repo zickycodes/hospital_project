@@ -29,6 +29,8 @@ import { PatientDto } from '../dto/patientdto';
 export class HospitalController {
   constructor(private hospitalAdminService: HospitalAdminService) {}
 
+  // Operators Controller Erros
+
   @UseGuards(HospitalAdminGuard)
   @Get('/show-operator')
   showDoctors(@Query('id') id: string) {
@@ -61,6 +63,17 @@ export class HospitalController {
     return this.hospitalAdminService.deleteOperator(param.id);
   }
 
+  // Patient Controller errors
+
+  @UseGuards(HospitalAdminGuard)
+  @Get('/show-patient')
+  showPatient(@Query('id') id: string) {
+    if (id) {
+      return this.hospitalAdminService.showPatient(id);
+    }
+    return this.hospitalAdminService.showPatients();
+  }
+
   @UseGuards(HospitalAdminGuard)
   @Post('/add-patients')
   @UsePipes(new ValidationPipe())
@@ -78,9 +91,11 @@ export class HospitalController {
   }
 
   @UseGuards(HospitalAdminGuard)
-  @Delete('/delete-operator/:id')
-  deletePatient(@Body() body: OperatorDto, @Param() param: any) {
+  @Delete('/delete-patient/:id')
+  deletePatient(@Param() param: any) {
     // console.log(body);
     return this.hospitalAdminService.deletePatient(param.id);
   }
+
+  // Patients_Records
 }
