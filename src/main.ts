@@ -12,11 +12,9 @@ async function bootstrap() {
     console.log('Connected to the database');
     await app.listen(process.env.PORT || 3000);
     app.enableCors({
-      origin: '*',
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      preflightContinue: true,
-      allowedHeaders: ['content-type', 'Authorization'],
-      optionsSuccessStatus: 204,
+      allowedHeaders: ['content-type'],
+      origin: 'http://localhost:8080',
+      credentials: true,
     });
     // app.enableCors({
     //   allowedHeaders: ['content-type'],
