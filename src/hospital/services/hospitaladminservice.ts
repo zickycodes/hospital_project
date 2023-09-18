@@ -3,13 +3,23 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Operator } from 'src/entities/Operators';
 import { OperatorDto } from '../dto/operatordto';
 import * as bcrypt from 'bcrypt';
+import { PatientDto } from '../dto/patientdto';
+import { PatientRecord } from 'src/entities/Patients_record';
+import { Patient } from 'src/entities/Patients';
+import { PatientRecordDto } from '../dto/patientsrecorddto';
 
 @Injectable()
 export class HospitalAdminService {
   constructor(
     @InjectModel(Operator)
     private operator: typeof Operator,
+    @InjectModel(Patient)
+    private patient: typeof Patient,
+    @InjectModel(PatientRecord)
+    private patientRecord: typeof PatientRecord,
   ) {}
+
+  // Operators Logic
   async showOperators() {
     try {
       const operator = await this.operator.findAll();
@@ -62,5 +72,63 @@ export class HospitalAdminService {
 
   async deleteOperator(id: number) {
     return await this.operator.destroy({ where: { id } });
+  }
+
+  // Patients Logic
+  async addPatients(patient: PatientDto) {
+    try {
+      // const password = operator.password;
+      // const hashedPassword = await bcrypt.hash(password, 10);
+      const res = await this.patient.create({
+        ...patient,
+      });
+      return {
+        message: 'Patients created successfully',
+        status: 200,
+        res: {
+          id: res.id,
+          email: res.email,
+        },
+      };
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  async editPatient(id: string, body: PatientDto) {
+    return await this.patient.update({ ...body }, { where: { id } });
+  }
+
+  async deletePatient(id: number) {
+    return await this.patient.destroy({ where: { id } });
+  }
+
+  // Patients Record Logic
+  async addRecord(patient_record: PatientRecordDto) {
+    try {
+      // const password = operator.password;
+      // const hashedPassword = await bcrypt.hash(password, 10);
+      const res = await this.patientRecord.create({
+        ...patient_record,
+      });
+      return {
+        message: 'Patients Record created successfully',
+        status: 200,
+        res: {
+          id: res.id,
+          // email: res.email,
+        },
+      };
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
+  }
+
+  async editRecord(id: number) {
+    return await this.patientRecord.destroy({ where: { id } });
+  }
+
+  async deleteRecord(id: number) {
+    return await this.patientRecord.destroy({ where: { id } });
   }
 }

@@ -1,16 +1,13 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class OperatorDto {
+export class PatientRecordDto {
   @IsNotEmpty()
   @IsString()
-  first_name: string;
+  patient_id: string;
   @IsNotEmpty()
   @IsString()
-  last_name: string;
-  @IsEmail()
+  patient_pic: string;
   @IsNotEmpty()
   @IsString()
-  email: string;
-  @IsNotEmpty()
-  password: string;
+  comment: string;
 }

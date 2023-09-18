@@ -13,6 +13,7 @@ import { Operator } from './entities/Operators';
 import { Doctor } from './entities/Doctors';
 import { Hospital } from './entities/Hospital';
 import { SuperAdminModule } from './superadmin/superadmin.module';
+import { HospitalAdminModule } from './hospital/hospital.module';
 // import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -53,6 +54,7 @@ import { SuperAdminModule } from './superadmin/superadmin.module';
     EmailModule,
     AuthModule,
     SuperAdminModule,
+    HospitalAdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

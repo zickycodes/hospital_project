@@ -7,6 +7,10 @@ export class Hospitaldto {
   @IsNotEmpty()
   @IsString()
   address: string;
+  @IsString()
+  state: string;
+  @IsString()
+  contact_info: string;
   @IsNotEmpty()
   @IsEmail()
   email: string;

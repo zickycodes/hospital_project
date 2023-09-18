@@ -22,6 +22,7 @@ import { HospitalAdminService } from '../services/hospitaladminservice';
 import { HospitalService } from 'src/superadmin/services/hospital.service';
 import { HospitalAdminGuard } from 'src/guards/hospitaladmin.guard';
 import { OperatorDto } from '../dto/operatordto';
+import { PatientDto } from '../dto/patientdto';
 // import { AuthGuard } from '../services/auth.guard';
 
 @Controller('/hospital-admin')
@@ -46,7 +47,7 @@ export class HospitalController {
   }
 
   @UseGuards(AdminGuard)
-  @Put('/edit-doctors/:id')
+  @Put('/edit-operators/:id')
   @UsePipes(new ValidationPipe())
   editDoctors(@Body() body: OperatorDto, @Param() param: any) {
     // console.log(body);
@@ -54,9 +55,32 @@ export class HospitalController {
   }
 
   @UseGuards(HospitalAdminGuard)
-  @Delete('/delete-doctor/:id')
+  @Delete('/delete-operator/:id')
   deleteDoctors(@Body() body: OperatorDto, @Param() param: any) {
     // console.log(body);
     return this.hospitalAdminService.deleteOperator(param.id);
+  }
+
+  @UseGuards(HospitalAdminGuard)
+  @Post('/add-patients')
+  @UsePipes(new ValidationPipe())
+  addPatients(@Body() body: PatientDto) {
+    // console.log(body);
+    return this.hospitalAdminService.addPatients(body);
+  }
+
+  @UseGuards(HospitalAdminGuard)
+  @Put('/edit-patients')
+  @UsePipes(new ValidationPipe())
+  editPatient(@Body() body: PatientDto, @Param() param: any) {
+    // console.log(body);
+    return this.hospitalAdminService.editPatient(param.id, body);
+  }
+
+  @UseGuards(HospitalAdminGuard)
+  @Delete('/delete-operator/:id')
+  deletePatient(@Body() body: OperatorDto, @Param() param: any) {
+    // console.log(body);
+    return this.hospitalAdminService.deletePatient(param.id);
   }
 }

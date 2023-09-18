@@ -16,4 +16,6 @@ export class Doctordto {
   state_of_origin: string;
   @IsNotEmpty()
   address: string;
+  @IsNotEmpty()
+  phone_no: string;
 }
