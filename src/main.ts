@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { Sequelize } from 'sequelize-typescript';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   const sequelize = app.get<Sequelize>(Sequelize);
   try {
     await sequelize.authenticate();
@@ -20,7 +20,24 @@ async function bootstrap() {
     //   origin: 'http://localhost:8080',
     //   credentials: true,
     // });
-    app.enableCors();
+    // app.use((req, res, next) => {
+    //   res.header('Access-Control-Allow-Origin', '*');
+    //   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    //   res.header(
+    //     'Access-Control-Allow-Headers',
+    //     'Content-Type, Accept, Authorization',
+    //   );
+    //   next();
+    // });
+
+    // app.enableCors({
+    //   origin: '*',
+    //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    //   allowedHeaders: ['Content-Type', 'Authorization'],
+    //   preflightContinue: false,
+    //   optionsSuccessStatus: 200,
+    // });
+
     console.log('Application started');
     await sequelize.sync({});
   } catch (err) {
