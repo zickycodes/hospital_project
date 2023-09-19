@@ -6,4 +6,5 @@ export default () => ({
   MYSQL_Host: process.env.MYSQL_HOST,
   MYSQL_DB: process.env.MYSQL_DB,
   JWT_Secret: process.env.JWT_Secret,
+  P0RT: process.env.PORT,
 });
