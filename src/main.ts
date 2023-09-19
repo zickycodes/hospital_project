@@ -11,7 +11,7 @@ async function bootstrap() {
     // await sequelize.authenticate();
     console.log('Connected to the database');
     const configService = new ConfigService();
-    await app.listen(3000);
+    await app.listen(configService.get('PORT') || 3000);
     // app.enableCors({
     //   allowedHeaders: ['Content-Type', 'Authorization'], // Include "Authorization" header
     //   origin: 'http://localhost:8080',
