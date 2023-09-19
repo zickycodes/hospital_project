@@ -9,7 +9,7 @@ async function bootstrap() {
   try {
     // await sequelize.authenticate();
     console.log('Connected to the database');
-    await app.listen(process.env.PORT);
+    await app.listen(process.env.PORT || 5000);
     // app.enableCors({
     //   allowedHeaders: ['Content-Type', 'Authorization'], // Include "Authorization" header
     //   origin: 'http://localhost:8080',
